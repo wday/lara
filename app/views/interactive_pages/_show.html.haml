@@ -32,6 +32,7 @@
         - i_type = interactive.class.name.underscore
         = render :partial => "#{i_type.pluralize}/show", :locals => {:interactive => interactive}
   - if page.fullwidth_interactive && page.show_info_assessment
+    .clear
     .text.full-width
       = render :partial => 'embeddables_block', :locals => {:page => page}
   - if page.show_sidebar && page.sidebar

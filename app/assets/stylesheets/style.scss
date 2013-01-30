@@ -257,6 +257,18 @@ button.disabled span.edit_trigger.disabled {
   float: right;
   height: auto;
   width: 60%;
+  .full {
+    width: 100%;
+    float: none;
+    clear: both;
+    position: fixed;
+  }
+}
+.other.full-width {
+  width: 100%;
+  float: none;
+  clear: both;
+  position: fixed;
 }
 .stacked-right .other {
   float: left;

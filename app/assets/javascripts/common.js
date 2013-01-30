@@ -51,10 +51,9 @@ function calculateDimensions() {
         $model_height = $('.model-container').height();
         $model_width = $('.model-container').css('width');
         if ($('.other.full-width').length > 0) {
-            // Values for fullwidth model
-            // Scroll starts here
+            // Short-circuit: we're using position:fixed for the full-width, so we don't want this scrolling
             $scroll_start = 0;
-            $model_start = $('.other.full-width').offset().top;
+            $scroll_end = 0;
         } else {
             // Values for columns
             // Scroll starts here
