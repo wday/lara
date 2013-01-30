@@ -1,12 +1,5 @@
 - next_page = nil unless defined?(next_page)
 - previous_page = nil unless defined?(previous_page)
--# How wide are our embeddables stacked?
-- el = page.embeddables.length
-- ec = ["questions"]
-- ec << "full-width" unless page.show_interactive && !page.fullwidth_interactive
-- ec << "two" if ec.include?("full-width") && (el%2 == 0 || el%3 == 1)
-- ec << "three" if !ec.include?("two") && ec.include?("full-width")
-- embeddable_classes = ec.join(" ")
 .content
   .page-nav
     - if previous_page
@@ -30,22 +23,17 @@
   %p.question= page.name
   - if page.show_introduction
     .instructions!= page.text
-  %div{:class => (page.show_interactive ? 'text' : 'text full-width')}
-    - if page.show_info_assessment && !page.fullwidth_interactive
-      %div{:class => embeddable_classes}
-        - page.embeddables.each do |e|
-          .embeddable
-            = render :partial => "#{e.class.name.underscore.pluralize}/lightweight", :locals => {:embeddable => e}
+  - if page.show_info_assessment && !page.fullwidth_interactive
+    %div{:class => (page.show_interactive ? 'text' : 'text full-width')}
+      = render :partial => 'embeddables_block', :locals => {:page => page}
   - if page.show_interactive
     %div{:class => (page.fullwidth_interactive ? 'other full-width' : 'other')}
       - page.interactives.each do |interactive|
         - i_type = interactive.class.name.underscore
         = render :partial => "#{i_type.pluralize}/show", :locals => {:interactive => interactive}
   - if page.fullwidth_interactive && page.show_info_assessment
-    %div{:class => embeddable_classes}
-      - page.embeddables.each do |e|
-        .embeddable
-          = render :partial => "#{e.class.name.underscore.pluralize}/lightweight", :locals => {:embeddable => e}
+    .text.full-width
+      = render :partial => 'embeddables_block', :locals => {:page => page}
   - if page.show_sidebar && page.sidebar
     .sidebar
       != page.sidebar

@@ -21,15 +21,15 @@ var $scroll_handler = function () {
     if ($content_height > $model_height) {
         if (($(document).scrollTop() > $scroll_start) && ($(document).scrollTop() < $scroll_end)) {
             // Case 1: moving with scroll: scrolling below header but not at bottom of info/assessment block
-            // console.debug('Moving: ' + $(document).scrollTop() + ', set to ' + ($model_start + ($(document).scrollTop() - $scroll_start)));
+            console.debug('Moving: ' + $(document).scrollTop() + ', set to ' + ($model_start + ($(document).scrollTop() - $scroll_start)));
             $('.model-container').css({'position': 'absolute', 'top': ($model_start + ($(document).scrollTop() - $scroll_start)) + 'px', 'width': $model_width});
         } else if ($(document).scrollTop() >= $scroll_end) {
             // Case 2: fixed to bottom
-            // console.debug('Bottom: ' + $(document).scrollTop() + ', set to ' + $model_lowest);
+            console.debug('Bottom: ' + $(document).scrollTop() + ', set to ' + $model_lowest);
             $('.model-container').css({'position': 'absolute', 'top': $model_lowest + 'px', 'width': $model_width});
         } else {
             // Case 3: fixed to top: scrolling shows some bit of header
-            // console.debug('Top: ' + $(document).scrollTop() + ', set to ' + $model_start);
+            console.debug('Top: ' + $(document).scrollTop() + ', set to ' + $model_start);
             $('.model-container').css({'position': 'absolute', 'top': $model_start + 'px', 'width': $model_width});
         }
     }
@@ -50,9 +50,18 @@ function calculateDimensions() {
         // Interactive dimensions
         $model_height = $('.model-container').height();
         $model_width = $('.model-container').css('width');
-        // Scroll starts here
-        $scroll_start = $header_height;
-        $model_start = ($content_top - $header_height);
+        if ($('.other.full-width').length > 0) {
+            // Values for fullwidth model
+            // Scroll starts here
+            $scroll_start = 0;
+            $model_start = $('.other.full-width').offset().top;
+        } else {
+            // Values for columns
+            // Scroll starts here
+            $scroll_start = $header_height;
+            $model_start = ($content_top - $header_height);
+        }
+        console.log('Model start is ' + $model_start);
         // Scroll ends here
         // The travel space available to the model is the height of the content block minus the height of the interactive, so the scroll-end is scroll start plus that value.
         $scroll_end = $scroll_start + ($content_height - $model_height);
