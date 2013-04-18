@@ -56,6 +56,8 @@ group :test, :development do
   gem 'fuubar'
   # Javascript tests with PhantomJS
   gem 'poltergeist'
+  # Spork
+  gem 'guard-spork'
 end
 
 # To use ActiveModel has_secure_password
