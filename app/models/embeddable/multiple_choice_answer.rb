@@ -8,11 +8,13 @@ module Embeddable
 
     belongs_to :run
 
-    has_and_belongs_to_many :answers,
+    has_many :multiple_choice_answer_multiple_choice_choices, :dependent => :destroy
+    has_many :answers,
+      :through => :multiple_choice_answer_multiple_choice_choices,
       :class_name => 'Embeddable::MultipleChoiceChoice',
-      :join_table => 'mc_answer_choices',
-      :foreign_key => 'answer_id',
-      :association_foreign_key => 'choice_id'
+      # TODO: check these key column names
+      # :foreign_key => 'answer_id',
+      # :association_foreign_key => 'choice_id'
 
     scope :by_question, lambda { |q|
       {:conditions => { :multiple_choice_id => q.id}}
