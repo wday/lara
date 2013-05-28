@@ -5,11 +5,12 @@ describe Embeddable::MultipleChoiceAnswer do
   let(:a2)       { FactoryGirl.create(:multiple_choice_choice, :choice => "answer_two") }
   let(:question) { FactoryGirl.create(:multiple_choice, :choices => [a1, a2]) }
   let(:run)      { FactoryGirl.create(:run, :activity => FactoryGirl.create(:activity) ) }
-  let(:answer)   { FactoryGirl.create(:multiple_choice_answer,
-                    :answers  => [a1, a2],
-                    :question => question,
-                    :run => run)
-                  }
+  let(:answer)   do
+    mca = FactoryGirl.create(:multiple_choice_answer, :question => question, :run => run)
+    mca.answers << a1
+    mca.answers << a2
+    mca
+  end
 
   describe "model associations" do
     it "should belong to a multiple choice" do

@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130520193900) do
+ActiveRecord::Schema.define(:version => 20130523201811) do
+
+  create_table "embeddable_multiple_choice_answer_multiple_choice_choices", :id => false, :force => true do |t|
+    t.integer "multiple_choice_answer_id"
+    t.integer "multiple_choice_choice_id"
+    t.string  "rationale"
+  end
+
+  add_index "embeddable_multiple_choice_answer_multiple_choice_choices", ["multiple_choice_answer_id", "multiple_choice_choice_id"], :name => "index_mc_answer_choices_on_answer_id_and_choice_id"
+  add_index "embeddable_multiple_choice_answer_multiple_choice_choices", ["multiple_choice_choice_id", "multiple_choice_answer_id"], :name => "index_mc_answer_choices_on_choice_id_and_answer_id"
 
   create_table "embeddable_multiple_choice_answers", :force => true do |t|
     t.integer  "run_id"
@@ -106,14 +115,6 @@ ActiveRecord::Schema.define(:version => 20130520193900) do
 
   add_index "lightweight_activities", ["publication_status"], :name => "lightweight_activities_publication_status_idx"
   add_index "lightweight_activities", ["user_id"], :name => "lightweight_activities_user_idx"
-
-  create_table "mc_answer_choices", :id => false, :force => true do |t|
-    t.integer "answer_id"
-    t.integer "choice_id"
-  end
-
-  add_index "mc_answer_choices", ["answer_id", "choice_id"], :name => "index_mc_answer_choices_on_answer_id_and_choice_id"
-  add_index "mc_answer_choices", ["choice_id", "answer_id"], :name => "index_mc_answer_choices_on_choice_id_and_answer_id"
 
   create_table "mw_interactives", :force => true do |t|
     t.string   "name"

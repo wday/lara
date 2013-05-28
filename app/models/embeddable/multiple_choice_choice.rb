@@ -4,13 +4,10 @@ module Embeddable
 
     belongs_to :multiple_choice, :class_name => "Embeddable::MultipleChoice"
 
-    has_many :multiple_choice_answer_multiple_choice_choices, :dependent => :destroy
-    has_and_belongs_to_many :answers,
-      :through => :multiple_choice_answer_multiple_choice_choices,
-      :class_name => 'Embeddable::MultipleChoiceAnswer',
-      # TODO: Check these key column names
-      :foreign_key => 'choice_id',
-      :association_foreign_key => 'answer_id'
+    has_many :multiple_choice_answer_multiple_choice_choices, :dependent => :destroy,
+      :class_name => "Embeddable::MultipleChoiceAnswerMultipleChoiceChoice"
+    has_many :answers, :through => :multiple_choice_answer_multiple_choice_choices,
+      :source => :multiple_choice_answer, :class_name => 'Embeddable::MultipleChoiceAnswer'
 
     def to_hash
       hash = {
