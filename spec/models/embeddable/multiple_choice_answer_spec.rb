@@ -126,5 +126,12 @@ describe Embeddable::MultipleChoiceAnswer do
         answer.multi_answer.should be_true
       end
     end
+
+    describe 'require_rationale' do
+      it 'should delegate to question' do
+        question.should_receive(:require_rationale).and_return(true)
+        answer.require_rationale.should be_true
+      end
+    end
   end
 end

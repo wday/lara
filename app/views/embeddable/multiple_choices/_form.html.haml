@@ -9,13 +9,6 @@
           $('#embeddable_multiple_choice_prompt').wysiwyg({"controls": { "html": { "visible": true }, "h1": { "visible": false }, "h2": { "visible": false }, "h3": { "visible": false } } });
       });
   = field_set_tag 'Choices' do
-    %label
-      Allow multiple answers
-      = f.check_box :multi_answer
-    %label
-      Custom Feedback
-      -# TODO: This should be unobtrusive JS and not onclick
-      = f.check_box :custom, :onclick => "showPrompts();"
     .choices
       %ul
         - @embeddable.choices.each do |choice|
@@ -31,7 +24,20 @@
               = choice_form.text_field :prompt
       = f.link_to_add "Add choice", :choices
     %label
-      Allow users to check answers
+      = f.check_box :multi_answer
+      Allow multiple answers?
+    %br
+    %label
+      = f.check_box :require_rationale
+      Require user to provide rationale for answers?
+    %br
+    %label
       = f.check_box :enable_check_answer
+      Allow users to use the "Check Answer" button?
+    %br
+    %label
+      -# TODO: This should be unobtrusive JS and not onclick
+      = f.check_box :custom, :onclick => "showPrompts();"
+      Provide custom feedback using "Check Answer"?
   = f.submit "Cancel", :class => 'close'
   = f.submit "Save", :class => 'embeddable-save'
