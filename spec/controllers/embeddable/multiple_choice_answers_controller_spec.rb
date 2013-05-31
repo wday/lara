@@ -65,6 +65,14 @@ describe Embeddable::MultipleChoiceAnswersController do
           answer.answers.should == [b_answer, c_answer]
         end
 
+        it 'should handle rationales if provided' do
+          pending "No idea what this should look like"
+          post 'update', :id => answer.id, :embeddable_multiple_choice_answer => {
+            :multiple_choice_answer_multiple_choice_choices => [
+            ]
+          }
+        end
+
         it "should fire off a web request to update the portal" do
           post "update", :id => answer.id, :embeddable_multiple_choice_answer => {
             :answers => [a_answer.id]

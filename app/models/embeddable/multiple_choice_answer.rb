@@ -13,6 +13,9 @@ module Embeddable
     has_many :answers, :through => :multiple_choice_answer_multiple_choice_choices,
       :source => :multiple_choice_choice
 
+    accepts_nested_attributes_for :multiple_choice_answer_multiple_choice_choices
+
+
     scope :by_question, lambda { |q|
       {:conditions => { :multiple_choice_id => q.id}}
     }
